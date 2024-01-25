@@ -28,11 +28,16 @@
     <style>
       :root {
         --primary: 220.9 39.3% 11%;
+        --secondary: 220 14.3% 95.9%;
+        --secondary-foreground: 220.9 39.3% 11%;
         --text-secondary: 220 8.9% 46.1%;
         --text-primary-foreground: 210 20% 98%;
         --accent: 220 14.3% 95.9%;
         --accent-foreground: 220.9 39.3% 11%;
         --border: 220 13% 91%;
+        --muted: 220 14.3% 95.9%;
+        --muted-foreground: 220 8.9% 46.1%;
+        --green: 34.0 197.0 94.0;
         --radius: 0.5rem;
       }
 
@@ -48,6 +53,13 @@
       address { font-size: 0.875rem; line-height: 1rem; font-style: normal; }
 
       /* Positioning */
+      .container {
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: 2rem;
+        padding-left: 2rem;
+      }
       .relative { position: relative; }
       .inline-flex { display: inline-flex; }
       .flex { display: flex;}
@@ -60,17 +72,25 @@
 
       /* Colors */
       .bg-primary\/80 { background-color: hsl(var(--primary) / 0.8); }
+      .bg-secondary { background-color:hsl(var(--secondary)); }
+      .bg-card { background-color:hsl(var(--card)); }
+      .bg-green { background-color:hsl(var(--green)); }
 
       /* Spacing */
+      .p-3 { padding: 0.75rem; }
       .p-4 { padding: 1rem; }
       .pt-1 { padding-top: 0.25rem; }
       .py-0\.5 { padding-top: 0.125rem; padding-bottom: 0.125rem; }
+      .px-1 { padding-left: .25rem; padding-right: .25rem; }
       .px-2 { padding-left: 0.5rem; padding-right: 0.5rem }
+      .mt-auto { margin-top: auto; }
       .mt-2 { margin-top: 0.5rem; }
       .mx-auto { margin-left: auto; margin-right: auto; }
-      .space-y-1\.5 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.375rem; }
-      .space-y-8 > :not([hidden]) ~ :not([hidden]) { margin-top: 2rem; }
+      .space-y-1 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.25rem; margin-bottom: 0.25rem; }
+      .space-y-1\.5 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.375rem; ; margin-bottom: 0.375rem; }
+      .space-y-8 > :not([hidden]) ~ :not([hidden]) { margin-top: 2rem; margin-bottom: 2rem; }
       .gap-1 { gap: 0.25rem; }
+      .gap-3 { gap: 0.75rem; }
       .gap-x-1 { column-gap: 0.25rem; }
       .gap-y-3 { row-gap: 0.75rem; }
       .gap-x-1\.5 { column-gap: 0.375rem; }
@@ -85,43 +105,83 @@
       .max-w-md { max-width: 28rem; }
       .max-w-2xl { max-width: 42rem; }
       .scroll-my-12 { scroll-margin-top: 3rem; scroll-margin-bottom: 3rem; }
+      .-mx-3 { margin-left: -0.75rem; margin-right: -0.75rem; }
+      .tracking-tight { letter-spacing: -.025em; }
+      .size-1 { width: 0.25rem; height: 0.25rem; }
 
-        /* Appearence */
+      /* Grid */
+      .grid { display:grid }
+      .grid-cols-1 { grid-template-columns:repeat(1, minmax(0, 1fr)); }
+
+      /* Overflow */
+      .overflow-hidden { overflow:hidden; }
+
+      /* Appearence */
       .hidden { display: none; }
+      .rounded-lg { border-radius: var(--radius); }
       .rounded-md { border-radius: calc(var(--radius) - 2px); }
       .rounded-xl { border-radius: 0.75rem; }
-      .border { border: 1px solid hsl(var(--border));}
+      .rounded-full { border-radius:9999px; }
+      .border { border: 1px solid hsl(var(--border)); }
+      .border-muted { border-color: hsl(var(--muted)); }
+      .border-transparent { border-color: transparent }
 
       /* Text & Fonts */
       .text-base { font-size: 1rem; line-height: 1.5rem; }
       .text-sm { font-size: .875rem;; line-height: 1.25rem; }
       .text-xs { font-size: .75rem; line-height: 1rem; }
+      .text-\[10px\] { font-size: 10px; }
       .text-secondary { color: hsl(var(--text-secondary)); }
       .text-primary-foreground { color: hsl(var(--text-primary-foreground)); }
+      .text-secondary-foreground { color:hsl(var(--secondary-foreground)) }
+      .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+      .text-card-foreground { color:hsl(var(--card-foreground)); }
+      .text-pretty { text-wrap: pretty; }
       .font-semibold { font-weight: 600; }
       .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; }
       .leading-none { line-height: 1; }
       .tabular-nums { font-variant-numeric: tabular-nums; }
       .hover\:underline:hover { text-decoration-line: underline; }
+      .underline { text-decoration-line: underline; }
 
       /* Hover & Transitions */
       .hover\:text-accent-foreground:hover { color: hsl(var(--accent-foreground)); }
       .hover\:bg-accent:hover { background-color: hsl(var(--accent)); }
 
+      /* Scroll */
+      .scroll-mb-16 { scroll-margin-bottom: 4rem; }
+      
+      /* Print */
+      .print-force-new-page { page-break-before: always; }
+
       /* Media Overrides */
-      @media (min-width: 768px) { .md\:p-16 { padding: 4rem; } }
+      @media (min-width: 768px) {
+        .md\:p-16 { padding: 4rem; }
+        .md\:grid-cols-2 { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+      }
+      @media (min-width: 1024px) {
+        .lg\:grid-cols-3 { grid-template-columns:repeat(3, minmax(0, 1fr)); }
+      }
+      @media (min-width: 1400px) {
+        .container { max-width: 1400px; }
+        .lg\:grid-cols-3 { grid-template-columns:repeat(3, minmax(0, 1fr)); }
+      }
       @media print { .p-12 { padding: 3rem; } }
+      @media print { .print\:visible { visibility:visible; } }
       @media print { .print\:hidden { display: none; } }
       @media print { .print\:flex { display: block; } }
+      @media print { .print\:gap-2 { gap: 0.5rem; } }
+      @media print { .print\:grid-cols-3 {  grid-template-columns:repeat(3, minmax(0, 1fr)); }
+  }
     </style>
   </head>
 
   <body>
     <main
-      class="relative mx-auto scroll-my-12 overflow-auto p-4 md:p-16 print:p-12"
+      class="container relative mx-auto scroll-my-12 overflow-auto p-4 print:p-12 md:p-16"
     >
-      <div class="max-w-2xl mx-auto space-y-8">
-        <div class="flex items-center">
+      <section class="mx-auto max-w-2xl space-y-8 print:space-y-6">
+        <div class="flex items-center justify-between">
           <div class="flex-1 space-y-1.5">
             <h1>Dmitriy Zharov</h1>
             <p class="max-w-md font-mono text-secondary">
@@ -130,7 +190,7 @@
             <address class="font-mono text-xs text-secondary">
               <a
                 class="inline-flex gap-x-1.5 align-baseline leading-none hover:underline"
-                href="https://www.google.com/maps/place/Helsinki"
+                href="https://www.google.com/maps/place/Dubai"
                 target="_blank"
               >
                 <svg
@@ -243,6 +303,7 @@
 
         <section class="flex flex-col gap-y-3">
           <h2>About</h2>
+
           <p class="font-mono text-secondary">
             Held demanding technical roles in the major banking companies.
             Gained versatile experience through a wide range of projects,
@@ -260,7 +321,7 @@
                 <h3
                   class="inline-flex justify-center items-center leading-none"
                 >
-                  <a class="hover:underline" href="https://wolt.com">Alfa-Bank JSC</a>
+                  <a class="hover:underline" href="https://alfabank.com/">Alfa-Bank JSC</a>
                 </h3>
                 <div class="text-sm tabular-nums text-secondary">
                   2020<!-- -->
@@ -279,7 +340,21 @@
         </section>
 
         <section class="flex flex-col gap-y-3">
+          <h2>Skills</h2>
+
+          <div class="flex flex-wrap gap-1">
+            <div class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold font-mono bg-primary/80 text-primary-foreground">
+              Swift
+            </div>
+            <div class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold font-mono bg-primary/80 text-primary-foreground">
+              Objective-C
+            </div>
+          </div>
+        </section>
+
+        <section class="flex flex-col gap-y-3">
           <h2>Education</h2>
+
           <div>
             <div class="flex flex-col space-y-1.5">
               <div class="flex items-center justify-between gap-x-2 text-base">
@@ -299,19 +374,84 @@
           </div>
         </section>
 
-        <section class="flex flex-col gap-y-3">
-          <h2>Skills</h2>
+        <section class="flex flex-col gap-y-3 print-force-new-page scroll-mb-16">
+          <h2>Projects</h2>
+          
+          <div class="-mx-3 grid grid-cols-1 gap-3 print:grid-cols-3 print:gap-2 md:grid-cols-2 lg:grid-cols-3">
+            <div class="rounded-lg bg-card text-card-foreground flex flex-col overflow-hidden border border-muted p-3">
 
-          <div class="flex flex-wrap gap-1">
-            <div class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold font-mono bg-primary/80 text-primary-foreground">
-              Swift
+              <div class="flex flex-col space-y-1.5">
+                <div class="space-y-1">
+                  <h3 class="font-semibold tracking-tight text-base">
+                    <a href="https://finances.zharov.dev/" target="_blank" class="inline-flex items-center gap-1 hover:underline">
+                      Finances Pro <!-- --> <span class="size-1 rounded-full bg-green"></span>
+                    </a>
+                  </h3>
+
+                  <div class="hidden font-mono text-xs underline print:visible">
+                    finances.zharov.dev
+                  </div>
+
+                  <p class="text-muted-foreground font-mono text-xs">
+                    A platform to build and grow your online business
+                  </p>
+                </div>
+              </div>
+              <div class="text-pretty font-mono text-sm text-muted-foreground mt-auto flex">
+                <div class="mt-2 flex flex-wrap gap-1">
+                  <div class="inline-flex items-center rounded-md border font-semibold font-mono text-nowrap border-transparent bg-secondary text-secondary-foreground px-1 text-[10px]">
+                    Side Project
+                  </div>
+
+                  <div class="inline-flex items-center rounded-md border font-semibold font-mono text-nowrap border-transparent bg-secondary text-secondary-foreground px-1 text-[10px]">
+                    SwiftUI
+                  </div>
+
+                  <div class="inline-flex items-center rounded-md border font-semibold font-mono text-nowrap border-transparent bg-secondary text-secondary-foreground px-1 text-[10px]">
+                    SwiftData
+                  </div>
+
+                  <div class="inline-flex items-center rounded-md border font-semibold font-mono text-nowrap border-transparent bg-secondary text-secondary-foreground px-1 text-[10px]">
+                    Observation
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold font-mono bg-primary/80 text-primary-foreground">
-              Objective-C
+            
+            <div class="rounded-lg bg-card text-card-foreground flex flex-col overflow-hidden border border-muted p-3">
+              <div class="flex flex-col space-y-1.5">
+                <div class="space-y-1">
+                  <h3 class="font-semibold tracking-tight text-base">
+                    <a href="https://github.com/dm-zharov/SwiftSecurity" target="_blank" class="inline-flex items-center gap-1 hover:underline">
+                      SwiftSecurity<!-- --> <span class="size-1 rounded-full bg-green"></span>
+                    </a>
+                  </h3>
+
+                  <div class="hidden font-mono text-xs underline print:visible">
+                    github.com/dm-zharov/SwiftSecurity
+                  </div>
+                  
+                  <p class="text-muted-foreground font-mono text-xs">
+                    Browser extension that records everything happening in a web application
+                  </p>
+                </div>
+              </div>
+              <div class="text-pretty font-mono text-sm text-muted-foreground mt-auto flex">
+                <div class="mt-2 flex flex-wrap gap-1">
+                  <div class="inline-flex items-center rounded-md border font-semibold font-mono text-nowrap border-transparent bg-secondary text-secondary-foreground px-1 text-[10px]">
+                    Framework
+                  </div>
+                  
+                  <div class="inline-flex items-center rounded-md border font-semibold font-mono text-nowrap border-transparent bg-secondary text-secondary-foreground px-1 text-[10px]">
+                    Keychain API
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
-      </div>
+
+      </section>
     </main>
   </body>
 </html>
